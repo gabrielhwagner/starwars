@@ -2,13 +2,16 @@
 
 [data-component="movie-block"]
     position relative
+    left 280%
     text-align center
-    padding 40px 0
+    padding 0 0 41px 0
+    
+
     span
         &.title
             color $primary-color
             font-weight 600
-            font-size 35px
+            font-size 27px
             position relative
             top 28px
             background-color $black
@@ -18,7 +21,9 @@
         border 2px solid $primary-color
         width 100%
         padding 20px 80px
-
+        overflow hidden
+        height 42px
+        transition 1.4s
         p
             &.description
                 color $white
@@ -63,6 +68,7 @@
         width 240px
         margin auto
         bottom 26px
+        opacity 0
         button 
             padding 5px 30px
             border-radius 15px
@@ -72,7 +78,7 @@
             letter-spacing 2px
             position relative
                     
-                            
-
+    .col-md-6
+        height 230px
 
                 

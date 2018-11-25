@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -18,36 +19,40 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  getFilms(grandCode: string, refresh: boolean): Observable<Film> {
+  getFilms(): Observable<Array<Film>> {
 
     return this.http.get( environment.swapi + 'films')
     .pipe(map((data: any) => {
-      debugger
+      
       const films = [];
 
-      data.results.array.forEach(element => {
-        debugger
+      data.results.forEach(element => {
+        
         const film = new Film;
         film.title = element.title;
         film.episode_id = element.episode_id;
         film.director = element.director;
+        film.producer = element.producer;
         film.opening_crawl = element.opening_crawl;
         film.release_date = element.release_date;
-        film.characters = this.setArrayId(element.characters, 'characters');
+        film.characters = this.setArrayId(element.characters);
+        film.planets = this.setArrayId(element.planets);
+        film.species = this.setArrayId(element.species);
+        film.starships = this.setArrayId(element.starships);
+        film.vehicles = this.setArrayId(element.vehicles);
+
+        films.push(film);
       });
       
-      films.push({});
-
-
       return films;
     }));
   }
 
-  setArrayId(data, camp) {
+  setArrayId(data) {
     const id = [];
 
-    data[camp].array.forEach((element, index) => {
-      id[index] = data[camp][index].match(/\d/g).join('');
+    data.forEach((element, index) => {
+      id[index] = element.match(/\d/g).join('');
     });
 
     return id;

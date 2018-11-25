@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Film } from './../../shared/models/film';
 
@@ -10,10 +10,16 @@ import { Film } from './../../shared/models/film';
 export class MovieBlockComponent implements OnInit {
 
   @Input() film: Film;
+  @Output() changeStep = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  maisDetalhes(id) {
+    debugger
+    this.changeStep.emit(id);
   }
 
 }
