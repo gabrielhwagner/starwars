@@ -14,12 +14,17 @@ export class Film {
 
     downloadComplete: boolean;
 
+    vehiclesAcount: number;
     vehicles: Array<Vehicle>;
+
+    speciesAcount: number;
     species:  Array<Specie>;
+
+    charactersAcount: number;
+    characters:  Array<Character>;
+    
     starships:  Array<string>;
     planets:  Array<string>;
-    characters:  Array<Character>;
-
     constructor() {
         this.downloadComplete = false;
         this.vehicles = [];

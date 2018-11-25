@@ -5,9 +5,15 @@
       <h2>Filmes</h2>
     </div>
     <div class="container">
-      <div class="row">
+      <div class="row" *ngIf="blockfilms">
         <div class="col-md-6" *ngFor="let film of films">
           <app-movie-block (changeStep)="id($event)" [film]="film"></app-movie-block>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="blockfilmDetail">
+        <div class="col-md-12">
+          <app-movie-block-detail (changeStep)="animationBlockFilmDetail($event)" [film]="filmDetail"></app-movie-block-detail>
         </div>
       </div>
     </div>

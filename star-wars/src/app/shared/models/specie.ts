@@ -6,7 +6,7 @@ export class Specie {
     classification: string;
     designation: string;
     language: string;
-    homeworld: string;
+  
 
     constructor() {
 

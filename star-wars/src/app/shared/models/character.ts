@@ -2,13 +2,12 @@ export class Character {
 
     id: number;
 
-    birthYear: string;
+    name: string;
     gender: string;
-    homeworld: string;
     mass: string;
     eye_color: string;
 
     constructor() {
-
+        
     }
 }

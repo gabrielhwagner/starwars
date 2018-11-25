@@ -4,6 +4,7 @@ import { AuthComponent } from './auth.component';
 import { AuthService } from './auth.service';
 import { SharedModule } from '../shared/shared.module';
 import { MovieBlockComponent } from './movie-block/movie-block.component';
+import { MovieBlockDetailComponent } from './movie-block-detail/movie-block-detail.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { MovieBlockComponent } from './movie-block/movie-block.component';
   ],
   declarations: [
     AuthComponent,
-    MovieBlockComponent
+    MovieBlockComponent,
+    MovieBlockDetailComponent
   ],
   providers: [
     AuthService

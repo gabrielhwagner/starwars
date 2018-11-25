@@ -4,7 +4,6 @@ export class Vehicle {
 
     name: string;
     model: string;
-    vehicle_class: string;
     manufacturer: string;
     passengers: string;
 

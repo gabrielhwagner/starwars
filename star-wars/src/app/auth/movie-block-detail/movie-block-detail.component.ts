@@ -1,16 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import * as Waves from 'node-waves';
 
-import { TweenMax, TimelineMax, Power4, TimelineLite, Linear } from 'gsap';
-
-import { Film } from './../../shared/models/film';
+import { Film } from 'src/app/shared/models/film';
 
 @Component({
-  selector: 'app-movie-block',
-  templateUrl: './movie-block.component.html',
-  styleUrls: ['./movie-block.component.styl']
+  selector: 'app-movie-block-detail',
+  templateUrl: './movie-block-detail.component.html',
+  styleUrls: ['./movie-block-detail.component.styl']
 })
-export class MovieBlockComponent implements OnInit, AfterViewInit {
+export class MovieBlockDetailComponent implements OnInit, AfterViewInit {
 
   @Input() film: Film;
   @Output() changeStep = new EventEmitter();
@@ -26,12 +24,11 @@ export class MovieBlockComponent implements OnInit, AfterViewInit {
     Waves.init();
     Waves.attach('.btn', ['waves-button', 'waves-light']);
 
-	}
+  }
 
-
-  maisDetalhes(id) {
-    
-    this.changeStep.emit(id);
+  // Ação para voltar para a lista de filmes
+  backBlockFilms() {
+    this.changeStep.emit('hide');
   }
 
 }

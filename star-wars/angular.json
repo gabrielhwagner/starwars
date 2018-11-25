@@ -27,9 +27,12 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/node-waves/dist/waves.css",
               "src/styles.styl"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/node-waves/dist/waves.js"
+            ]
           },
           "configurations": {
             "production": {

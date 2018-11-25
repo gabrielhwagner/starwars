@@ -1,0 +1,57 @@
+<div data-component="movie-block-detail">
+
+  <span class="title">{{film.title}}</span>
+  <div class="border">   
+    <p class="description">
+        {{film.opening_crawl}}
+    </p>
+
+    <ul>
+      <li class="director icon la-video-camera">
+        <span class="text">
+          Director
+        </span>  
+        <span class="dsc">{{film.director}}</span>
+      </li>
+      <li class="producer icon la-video-camera">
+        <span class="text">
+          Producer
+        </span>  
+        <span class="dsc">{{film.producer}}</span>
+      </li>
+      <li class="release-date icon la-video-camera">
+        <span class="text">
+          Data
+        </span> 
+        <span class="dsc">{{film.release_date | date }}</span>
+      </li>
+    </ul>
+    <div class="content-dsc">
+      <div class="row">
+        <div class="col-md-4">
+          <span class="title">Character(s)</span>
+          <div *ngFor="let cht of film.characters">
+            <h5>{{cht.name}}</h5>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <span class="title">Specie(s)</span>
+          <div *ngFor="let spe of film.species">
+            <h5>{{spe.name}}</h5>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <span class="title">Vehicle(s)</span>
+          <div *ngFor="let veh of film.vehicles">
+            <h5>{{veh.name}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-button">
+  
+    <button class="btn" (click)="backBlockFilms()">Voltar</button>
+  </div>
+  
+</div>
