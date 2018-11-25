@@ -1,4 +1,8 @@
-export class Films {
+import { Character } from './character';
+import { Specie } from './specie';
+import { Vehicle } from './vehicle';
+
+export class Film {
 
     episode_id: number;
     title: string;
@@ -8,13 +12,16 @@ export class Films {
 
     release_date: string;
 
-    vehicles: Array<string>;
-    species:  Array<string>;
+    downloadComplete: boolean;
+
+    vehicles: Array<Vehicle>;
+    species:  Array<Specie>;
     starships:  Array<string>;
     planets:  Array<string>;
-    characters:  Array<string>;
+    characters:  Array<Character>;
 
     constructor() {
+        this.downloadComplete = false;
         this.vehicles = [];
         this.species = [];
         this.starships = [];

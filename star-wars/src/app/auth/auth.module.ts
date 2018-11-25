@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth.component';
 import { AuthService } from './auth.service';
 import { SharedModule } from '../shared/shared.module';
+import { MovieBlockComponent } from './movie-block/movie-block.component';
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule
   ],
   declarations: [
-    AuthComponent
+    AuthComponent,
+    MovieBlockComponent
   ],
   providers: [
     AuthService

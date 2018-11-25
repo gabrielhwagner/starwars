@@ -1,0 +1,78 @@
+@import '../../../assets/stylus/utils.styl';
+
+[data-component="movie-block"]
+    position relative
+    text-align center
+    padding 40px 0
+    span
+        &.title
+            color $primary-color
+            font-weight 600
+            font-size 35px
+            position relative
+            top 28px
+            background-color $black
+            padding 0 70px
+            font-family $star-jedi
+    .border
+        border 2px solid $primary-color
+        width 100%
+        padding 20px 80px
+
+        p
+            &.description
+                color $white
+                letter-spacing 2px
+                line-height 23px
+        ul
+            list-style-type none
+            padding 0
+            margin 0
+            display table
+            width 100%
+            text-align left
+            li
+                display table-cell
+                width 33%
+                padding 20px 0
+                text-align center
+                span
+                    &.text
+                    &.dsc    
+                        color $white
+                        font-size 14px
+                        font-weight 100
+                    &.dsc
+                        display block
+
+        .icon
+            display inline-block
+            vertical-align middle
+            &:before
+                color $yellow
+                font-weight 100
+                font-size 26px
+                display inline-block
+                vertical-align middle
+                margin-right 5px
+    .content-button
+        background-color $black
+        position absolute
+        left 0
+        right 0
+        width 240px
+        margin auto
+        bottom 26px
+        button 
+            padding 5px 30px
+            border-radius 15px
+            background-color $background
+            color $white
+            border none
+            letter-spacing 2px
+            position relative
+                    
+                            
+
+
+                
