@@ -1,6 +1,6 @@
 import { AppEventDispatcher } from './../shared/appEventDispacher';
 import { Component, OnInit, HostListener } from '@angular/core';
-import { TimelineMax, Power4 } from 'gsap';
+import { TimelineMax, Power4, TweenMax } from 'gsap';
 
 import { AuthService } from './auth.service';
 
@@ -201,7 +201,7 @@ export class AuthComponent implements OnInit {
     // Inicia a timeline
     this.timeLine.play();
 
-    if(window.innerWidth <= 600) {
+    if (window.innerWidth <= 600) {
       TweenMax.set('[data-component="movie-block"] .border', { height: 'auto', delay: 1 });
     }
   }
