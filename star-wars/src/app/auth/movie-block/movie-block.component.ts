@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, HostListener } from '@angular/core';
 import * as Waves from 'node-waves';
 
 import { TweenMax, TimelineMax, Power4, TimelineLite, Linear } from 'gsap';
@@ -20,11 +20,13 @@ export class MovieBlockComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit() {
+
   }
+
 
   ngAfterViewInit() {
     // Animação de click dos buttons
-    console.log('foi');
+   
     Waves.init();
     Waves.attach('.btn', ['waves-button', 'waves-light']);
 

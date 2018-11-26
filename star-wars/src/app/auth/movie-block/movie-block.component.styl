@@ -17,6 +17,8 @@
             background-color $black
             padding 0 70px
             font-family $star-jedi
+            +breakpoint(middle-mobile)
+                padding 0 14px
     .border
         border 2px solid $primary-color
         width 100%
@@ -24,6 +26,8 @@
         overflow hidden
         height 42px
         transition 1s
+        +breakpoint(middle-mobile)
+            padding 20px 12px
         p
             &.description
                 color $white
@@ -41,6 +45,9 @@
                 width 33%
                 padding 20px 0
                 text-align center
+                +breakpoint(middle-mobile )
+                    width 100%
+                    display block
                 span
                     &.text
                     &.dsc    

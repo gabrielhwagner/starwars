@@ -1,5 +1,5 @@
 import { AppEventDispatcher } from './../shared/appEventDispacher';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { TimelineMax, Power4 } from 'gsap';
 
 import { AuthService } from './auth.service';
@@ -41,6 +41,7 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
     this.getFilms();
   }
+
 
   // Busca os dados de todos os filmes
   getFilms() {
@@ -177,7 +178,7 @@ export class AuthComponent implements OnInit {
 
     } else {
       this.comp = '[data-component="movie-block-detail"]';
-      
+
       heightBlock = document.getElementById('height').offsetHeight;
     }
 
@@ -199,6 +200,10 @@ export class AuthComponent implements OnInit {
 
     // Inicia a timeline
     this.timeLine.play();
+
+    if(window.innerWidth <= 600) {
+      TweenMax.set('[data-component="movie-block"] .border', { height: 'auto', delay: 1 });
+    }
   }
 
 
@@ -266,9 +271,9 @@ export class AuthComponent implements OnInit {
 
     } else {
 
-      this.blockMovies = false;
-      this.blockMovieDetail = true;
       this.movieDetail = movie;
+      this.blockMovieDetail = true;
+      this.blockMovies = false;
       setTimeout(() => {
         this.showBlockMovies('movieBlockDetail');
       }, 500);

@@ -22,7 +22,6 @@ export class MovieBlockDetailComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     // Animação de click dos buttons
-    console.log('foi');
     Waves.init();
     Waves.attach('.btn', ['waves-button', 'waves-light']);
 
