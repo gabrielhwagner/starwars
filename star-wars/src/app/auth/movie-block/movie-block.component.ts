@@ -3,7 +3,7 @@ import * as Waves from 'node-waves';
 
 import { TweenMax, TimelineMax, Power4, TimelineLite, Linear } from 'gsap';
 
-import { Film } from './../../shared/models/film';
+import { Movie } from './../../shared/models/movie';
 
 @Component({
   selector: 'app-movie-block',
@@ -12,7 +12,9 @@ import { Film } from './../../shared/models/film';
 })
 export class MovieBlockComponent implements OnInit, AfterViewInit {
 
-  @Input() film: Film;
+  // Objeto de filme para exibir
+  @Input() movie: Movie;
+
   @Output() changeStep = new EventEmitter();
 
   constructor() { }
@@ -26,11 +28,14 @@ export class MovieBlockComponent implements OnInit, AfterViewInit {
     Waves.init();
     Waves.attach('.btn', ['waves-button', 'waves-light']);
 
-	}
+  }
 
-
-  maisDetalhes(id) {
-    
+  /**
+	 * OutPut para iniciar a ação de abrir o bloco de detalhe
+	 * @param id identificador do bloco do filme
+	*/
+  moreDetails(id) {
+  
     this.changeStep.emit(id);
   }
 

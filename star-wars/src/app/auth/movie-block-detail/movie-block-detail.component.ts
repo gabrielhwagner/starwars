@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+
 import * as Waves from 'node-waves';
 
-import { Film } from 'src/app/shared/models/film';
+import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
   selector: 'app-movie-block-detail',
@@ -10,7 +11,8 @@ import { Film } from 'src/app/shared/models/film';
 })
 export class MovieBlockDetailComponent implements OnInit, AfterViewInit {
 
-  @Input() film: Film;
+ 
+  @Input() movie: Movie;
   @Output() changeStep = new EventEmitter();
 
   constructor() { }
@@ -26,8 +28,9 @@ export class MovieBlockDetailComponent implements OnInit, AfterViewInit {
 
   }
 
-  // Ação para voltar para a lista de filmes
-  backBlockFilms() {
+  
+	// OutPut para iniciar a ação de voltar para a lista de filmes
+  backBlockMovies() {
     this.changeStep.emit('hide');
   }
 

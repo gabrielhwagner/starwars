@@ -2,7 +2,7 @@ import { Character } from './character';
 import { Specie } from './specie';
 import { Vehicle } from './vehicle';
 
-export class Film {
+export class Movie {
 
     episode_id: number;
     title: string;
@@ -22,15 +22,11 @@ export class Film {
 
     charactersAcount: number;
     characters:  Array<Character>;
-    
-    starships:  Array<string>;
-    planets:  Array<string>;
+
     constructor() {
         this.downloadComplete = false;
         this.vehicles = [];
         this.species = [];
-        this.starships = [];
-        this.planets = [];
         this.characters = [];
     }
 }

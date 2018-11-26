@@ -8,6 +8,5 @@ export class Character {
     eye_color: string;
 
     constructor() {
-        
     }
 }

@@ -1,12 +1,10 @@
 import { AppEventDispatcher } from './../shared/appEventDispacher';
-import { Character } from './../shared/models/character';
-import { Component, OnInit, HostListener } from '@angular/core';
-import { TweenMax, TimelineMax, Power4, TimelineLite, Linear } from 'gsap';
+import { Component, OnInit } from '@angular/core';
+import { TimelineMax, Power4 } from 'gsap';
 
 import { AuthService } from './auth.service';
 
-import { Film } from '../shared/models/film';
-import { Bd } from '../shared/models/bd';
+import { Movie } from '../shared/models/movie';
 import { EventTypes } from '../shared/eventTypes';
 
 @Component({
@@ -18,41 +16,50 @@ export class AuthComponent implements OnInit {
 
   timeLine: TimelineMax;
 
-  films: Array<Film>;
-  filmDetail: Film;
+  // Lista de filmes
+  movies: Array<Movie>;
 
-  bd: Bd;
+  // File que sera exibido no detalhe
+  movieDetail: Movie;
 
-  blockfilms: boolean;
-  blockfilmDetail: boolean;
+  // exibicao dos blocos de filmes
+  blockMovies: boolean;
 
+  // exibicao dos bloco de detalhe do filme
+  blockMovieDetail: boolean;
+
+  // valor do componente para animação
   comp: string;
 
   constructor(private authService: AuthService) {
-    this.bd = new Bd;
-    this.blockfilmDetail = false;
-    this.blockfilms = false;
+    this.blockMovieDetail = false;
+    this.blockMovies = false;
     this.timeLine = new TimelineMax({paused: true});
     this.comp = '[data-component="movie-block"] ';
   }
 
   ngOnInit() {
-    this.scrollHandler();
     this.getFilms();
   }
 
   // Busca os dados de todos os filmes
   getFilms() {
 
+    // Evento para abertura do preloader
     AppEventDispatcher.dispatch(EventTypes.PRELOADER, 'show');
 
-    this.authService.getFilms().subscribe((data: Array<Film>) => {
+    this.authService.getFilms().subscribe((data: Array<Movie>) => {
 
-        this.films = data;
+        this.movies = data;
+
+        // Evento para fechamento do preloader
         AppEventDispatcher.dispatch(EventTypes.PRELOADER, 'hide');
-        this.blockfilms = true;
+
+        this.blockMovies = true;
+
         setTimeout(() => {
-          this.showBlockFilms('movieBlock');
+          // Funcao de inicialização da animação de abertura dos blocos
+          this.showBlockMovies('movieBlock');
         }, 1000);
 
       }, error => {
@@ -62,31 +69,30 @@ export class AuthComponent implements OnInit {
 
   }
 
-  // Ouve o scroll, valida a posição da tela para inicias a animação dos blocos de filmes
-  @HostListener('window:scroll')
-  scrollHandler() {
-    // window.scrollY;.
-    if (document.getElementsByClassName('container')[0] !== undefined) {
-      // console.log(document.getElementsByClassName('col-md-12').getBoundingClientRect().top);
-    }
-  }
 
+  /**
+	 * Percorre o array de dados do film e verifica se ele ja está completo para a exibição
+	 * @param id idenficador do filme
+  */
+  validateMovies(id) {
 
-  id(id) {
-    debugger
-    for (let index = 0; index < this.films.length; index++) {
-      if (this.films[index].episode_id === id) {
-        if (this.films[index].downloadComplete) {
+    // Percorre o array de filmes
+    for (let index = 0; index < this.movies.length; index++) {
+
+      // Valida se o filme é o mesmo que o usuario escolheu
+      if (this.movies[index].episode_id === id) {
+
+        // Valida se o filme ja não tem todos os dados necessarios
+        if (this.movies[index].downloadComplete) {
           // passar filme para o bloco
-          this.hideBlockFilms('movieBlock', this.films[index]);
-          // exibir bloco de detalhe
+          this.hideBlockMovies('movieBlock', this.movies[index]);
+
         } else {
 
-          // faz consulta nos dados para ver se ja tem, e busca os que faltam
-          
-          this.sourceBd('characters', this.films[index]);
-          this.sourceBd('vehicles', this.films[index]);
-          this.sourceBd('species', this.films[index]);
+          // Chama as funções que buscam os dados
+          this.sourceBd('characters', this.movies[index]);
+          this.sourceBd('vehicles', this.movies[index]);
+          this.sourceBd('species', this.movies[index]);
         }
         break;
       }
@@ -94,89 +100,88 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  sourceBd(type: string, film: Film) {
 
+  /**
+	 * Percorre o array de dedos do filme
+	 * @param type string que identifica o array de informação do filme
+   * @param movie objeto de filme
+  */
+  sourceBd(type: string, movie: Movie) {
 
-    if (this.bd[type].length === 0 ) {
+    movie[type].forEach((element, index) => {
 
-      film[type].forEach((element, index) => {
-
-        
-        AppEventDispatcher.dispatch(EventTypes.PRELOADER, 'show');
-        this.getInfo(type, film, index);
-      });
-
-    } else {
-
-      for (let countFilm = 0; countFilm < film[type].length; countFilm++) {
-
-        for (let index = 0; index < this.bd[type].length; index++) {
-          if (this.bd[type][index].id === film[type][countFilm]) {
-            film[type].push(this.bd[type][index]);
-
-            break;
-          } else {
-            // Não tem o dado no array local
-            if (index + 1 === this.bd[type].length) {
-              this.getInfo(type, film, countFilm);
-            }
-            break;
-          }
-        }
-
-      }
-    }
+      // Evento para abertura do preloader
+      AppEventDispatcher.dispatch(EventTypes.PRELOADER, 'show');
+      this.getInfo(type, movie, index);
+    });
   }
 
-  getInfo(type, film, index) {
 
-    const t = film[type].length;
-    film[`${type}Acount`] = film[type].length;
+  /**
+	 * Chama a funcão de get de dados do filme e seta para o filme
+	 * @param type string que identifica o array de informação do filme
+   * @param movie objeto de filme
+   * @param index posição do array
+  */
+  getInfo(type, movie, index) {
 
-    this.authService.getInfo(type, film[type][index]).subscribe(data => {
+    const t = movie[type].length;
+    movie[`${type}Acount`] = movie[type].length;
 
-
-      this.bd[type].push(data);
-      film[type].push(data);
-
-
-      this.validateDownload(film, type);
+    this.authService.getInfo(type, movie[type][index]).subscribe(data => {
+      movie[type].push(data);
+      this.validateDownload(movie, type);
     }, error => {
       console.log(error);
     });
   }
-  validateDownload(film: Film, type) {
-    if (film.vehiclesAcount ===  film.vehicles.length / 2 &&
-        film.speciesAcount ===  film.species.length / 2 &&
-        film.charactersAcount ===  film.characters.length / 2) {
+
+
+  /**
+	 * Valida se o filme ja esta com todos os dados
+	 * @param type string que identifica o array de informação do filme
+   * @param movie objeto de filme
+  */
+  validateDownload(movie: Movie, type) {
+    if (movie.vehiclesAcount ===  movie.vehicles.length / 2 &&
+        movie.speciesAcount ===  movie.species.length / 2 &&
+        movie.charactersAcount ===  movie.characters.length / 2) {
+
+          // Evento para fechamento do preloader
           AppEventDispatcher.dispatch(EventTypes.PRELOADER, 'hide');
-          // exibe bloco
-          debugger
-          film.vehicles.splice(0, film.vehiclesAcount);
-          film.species.splice(0, film.speciesAcount);
-          film.characters.splice(0, film.charactersAcount);
-          film.downloadComplete = true;
 
-          this.hideBlockFilms('movieBlock', film);
+          // limpa o array com os dados incompletos
+          movie.vehicles.splice(0, movie.vehiclesAcount);
+          movie.species.splice(0, movie.speciesAcount);
+          movie.characters.splice(0, movie.charactersAcount);
 
+          movie.downloadComplete = true;
+
+          // Funçao para iniciar a animaçõa de saido dos blosox
+          this.hideBlockMovies('movieBlock', movie);
     }
-
   }
 
-  // Animação de entrada dos blocos de filme
-  showBlockFilms(action) {
+
+  /**
+	 * Animação de entrada dos blocos de filme e bloco de detalhe
+	 * @param action string que identifica o bloco a ser exibido
+  */
+  showBlockMovies(action) {
 
     let heightBlock;
 
     if (action === 'movieBlock') {
       this.comp = '[data-component="movie-block"]';
-      heightBlock = '430px';
+      heightBlock = '450px';
 
     } else {
       this.comp = '[data-component="movie-block-detail"]';
-      heightBlock = 'auto';
+      
+      heightBlock = document.getElementById('height').offsetHeight;
     }
 
+    // timeline do Tweenmax
     this.timeLine
     .staggerTo(`${this.comp}`,
       1.2,
@@ -192,11 +197,16 @@ export class AuthComponent implements OnInit {
     { opacity: 1, ease: Power4.easeOut }
     );
 
+    // Inicia a timeline
     this.timeLine.play();
   }
 
-  // Animação de saída dos blocos de filme
-  hideBlockFilms(action, film) {
+
+  /**
+	 * Animação de saída dos blocos de filme e bloco de detalhe
+	 * @param action string que identifica o bloco a ser exibido
+  */
+  hideBlockMovies(action, movie) {
 
     if (action === 'movieBlock') {
       this.comp = '[data-component="movie-block"] ';
@@ -204,6 +214,7 @@ export class AuthComponent implements OnInit {
       this.comp = '[data-component="movie-block-detail"] ';
     }
 
+     // timeline do Tweenmax
     this.timeLine
     .to(`
       ${this.comp} .content-button`,
@@ -219,39 +230,47 @@ export class AuthComponent implements OnInit {
     { left: '280%', ease: Power4.easeInOut }, 0.1
     );
 
+    // Inicia a timeline
     this.timeLine.play();
 
     if (action === 'movieBlock') {
       setTimeout(() => {
-        this.animationBlockFilmDetail('show', film);
+
+        // Funcao de controle das animações
+        this.animationBlockMovieDetail('show', movie);
       }, 3000);
     }
 
   }
 
-  // Animação de entrada e saida do bloco de detalhe do filme
-  animationBlockFilmDetail(action, film) {
+
+  /**
+	 * Controle das trocas das animações
+	 * @param action string que identifica o bloco a ser exibido
+   * @param movie objeto de filme
+  */
+  animationBlockMovieDetail(action, movie) {
 
     if (action === 'hide') {
 
-      this.hideBlockFilms('movieBlockDetail', null);
+      this.hideBlockMovies('movieBlockDetail', null);
 
       setTimeout(() => {
-        this.blockfilms = true;
-        this.blockfilmDetail = false;
-       
+        this.blockMovies = true;
+        this.blockMovieDetail = false;
+
       }, 2000);
       setTimeout(() => {
-        this.showBlockFilms('movieBlock');
+        this.showBlockMovies('movieBlock');
       }, 2000);
 
     } else {
 
-      this.blockfilms = false;
-      this.blockfilmDetail = true;
-      this.filmDetail = film;
+      this.blockMovies = false;
+      this.blockMovieDetail = true;
+      this.movieDetail = movie;
       setTimeout(() => {
-        this.showBlockFilms('movieBlockDetail');
+        this.showBlockMovies('movieBlockDetail');
       }, 500);
     }
   }

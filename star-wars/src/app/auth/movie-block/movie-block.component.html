@@ -1,8 +1,8 @@
 <div data-component="movie-block">
-  <span class="title">{{film.title}}</span>
+  <span class="title">{{movie.title}}</span>
   <div class="border">   
     <p class="description">
-        {{film.opening_crawl}}
+        {{movie.opening_crawl}}
     </p>
 
     <ul>
@@ -10,25 +10,25 @@
         <span class="text">
           Director
         </span>  
-        <span class="dsc">{{film.director}}</span>
+        <span class="dsc">{{movie.director}}</span>
       </li>
       <li class="producer icon la-video-camera">
         <span class="text">
           Producer
         </span>  
-        <span class="dsc">{{film.producer}}</span>
+        <span class="dsc">{{movie.producer}}</span>
       </li>
       <li class="release-date icon la-video-camera">
         <span class="text">
           Data
         </span> 
-        <span class="dsc">{{film.release_date | date }}</span>
+        <span class="dsc">{{movie.release_date | date }}</span>
       </li>
     </ul>
 
   </div>
   <div class="content-button">
-    <button class="btn" (click)="maisDetalhes(film.episode_id)">Mais detalhes</button>
+    <button class="btn" (click)="moreDetails(movie.episode_id)">Mais detalhes</button>
   </div>
   
 </div>

@@ -2,18 +2,18 @@
   <app-header></app-header>
   <main>
     <div class="title">
-      <h2>Filmes</h2>
+      <h2>Movies</h2>
     </div>
     <div class="container">
-      <div class="row" *ngIf="blockfilms">
-        <div class="col-md-6" *ngFor="let film of films">
-          <app-movie-block (changeStep)="id($event)" [film]="film"></app-movie-block>
+      <div class="row" *ngIf="blockMovies">
+        <div class="col-md-6" *ngFor="let movie of movies">
+          <app-movie-block (changeStep)="validateMovies($event)" [movie]="movie"></app-movie-block>
         </div>
       </div>
 
-      <div class="row" *ngIf="blockfilmDetail">
+      <div class="row" *ngIf="blockMovieDetail">
         <div class="col-md-12">
-          <app-movie-block-detail (changeStep)="animationBlockFilmDetail($event)" [film]="filmDetail"></app-movie-block-detail>
+          <app-movie-block-detail (changeStep)="animationBlockMovieDetail($event)" [movie]="movieDetail"></app-movie-block-detail>
         </div>
       </div>
     </div>

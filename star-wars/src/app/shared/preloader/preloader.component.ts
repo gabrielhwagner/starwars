@@ -12,7 +12,6 @@ import { EventTypes } from '../eventTypes';
 })
 export class PreloaderComponent implements OnInit {
 
-  @Input() hide: boolean;
   comp: string;
   time: number;
   show: boolean;
@@ -24,16 +23,21 @@ export class PreloaderComponent implements OnInit {
    }
 
   ngOnInit() {
+
+    // Ouve o evento de preloader
     AppEventDispatcher.listen(EventTypes.PRELOADER, (event) => {
 
-      if (event === 'show') {
 
+      if (event === 'show') {
+        
+        // Exibe o preloader
         this.show = true;
         TweenMax.set(this.comp,  {display: 'block'});
         TweenMax.to(this.comp,  this.time, {delay: 0.1, opacity: 1});
 
       } else if (event === 'hide') {
 
+        // Esconde o preloader
         TweenMax.to(this.comp,  this.time, {opacity: 0, onComplete: () => {
           this.show = false;
           TweenMax.set(this.comp,  {display: 'none'});

@@ -10,7 +10,7 @@ import 'rxjs/add/operator/do';
 
 
 import { environment } from 'src/environments/environment';
-import { Film } from '../shared/models/film';
+import { Movie } from '../shared/models/movie';
 import { Vehicle } from '../shared/models/vehicle';
 import { Specie } from '../shared/models/specie';
 
@@ -36,32 +36,30 @@ export class AuthService {
     }
   }
 
-  getFilms(): Observable<Array<Film>> {
+  getFilms(): Observable<Array<Movie>> {
 
     return this.http.get( environment.swapi + 'films')
     .pipe(map((data: any) => {
       
-      const films = [];
+      const movies = [];
 
       data.results.forEach(element => {
         
-        const film = new Film;
-        film.title = element.title;
-        film.episode_id = element.episode_id;
-        film.director = element.director;
-        film.producer = element.producer;
-        film.opening_crawl = element.opening_crawl;
-        film.release_date = element.release_date;
-        film.characters = this.setArrayId(element.characters);
-        film.planets = this.setArrayId(element.planets);
-        film.species = this.setArrayId(element.species);
-        film.starships = this.setArrayId(element.starships);
-        film.vehicles = this.setArrayId(element.vehicles);
+        const movie = new Movie;
+        movie.title = element.title;
+        movie.episode_id = element.episode_id;
+        movie.director = element.director;
+        movie.producer = element.producer;
+        movie.opening_crawl = element.opening_crawl;
+        movie.release_date = element.release_date;
+        movie.characters = this.setArrayId(element.characters);
+        movie.species = this.setArrayId(element.species);
+        movie.vehicles = this.setArrayId(element.vehicles);
 
-        films.push(film);
+        movies.push(movie);
       });
       
-      return films;
+      return movies;
     }));
   }
 
