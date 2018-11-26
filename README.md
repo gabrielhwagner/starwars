@@ -12,9 +12,9 @@ Api utiizada: [swapi](https://swapi.co/)
   https://github.com/gabrielhwagner/starwars.git
   ```
   
-  * Entre na pasta 
+  * Entre no diretório
   ```
-  star-wars
+  starwars/star-wars
   ```
   
    * Execute o comando
